@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1 class="title">
+        <i class="ri-function-line"></i>
+        Linear Regression Calculator
+    </h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    <i class="ri-error-warning-line"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <form method="POST">
+        <div class="data-input">
+            <table id="dataTable" class="data-table">
+                <thead>
+                    <tr>
+                        <th>x</th>
+                        <th>y</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="x" value="1" class="input-field"></td>
+                        <td><input type="text" name="y" value="3" class="input-field"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="btn-group">
+                <button type="button" onclick="addRow()" class="btn btn-secondary">
+                    <i class="ri-add-line"></i>
+                    Add Row
+                </button>
+                <button type="button" onclick="deleteRow()" class="btn btn-secondary">
+                    <i class="ri-delete-bin-line"></i>
+                    Delete Row
+                </button>
+            </div>
+            
+            <div class="input-group">
+                <label for="predict_value" class="input-label">Enter prediction value (x):</label>
+                <input type="text" id="predict_value" name="predict_value" value="6" class="input-field">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+                <i class="ri-calculator-line"></i>
+                Calculate
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+function addRow() {
+    const table = document.getElementById("dataTable");
+    const row = table.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+    
+    cell1.innerHTML = '<input type="text" name="x" value="0" class="input-field">';
+    cell2.innerHTML = '<input type="text" name="y" value="0" class="input-field">';
+}
+
+function deleteRow() {
+    const table = document.getElementById("dataTable");
+    if (table.rows.length > 2) {
+        table.deleteRow(table.rows.length - 1);
+    }
+}
+</script>
+{% endblock %}
